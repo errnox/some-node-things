@@ -1,0 +1,52 @@
+/* Table styling */
+
+.table {
+  display: table;
+  /* height: 100%; */
+  /* table-layout: fixed; */
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-cell {
+  display: table-cell;
+  border: 1px solid #333333;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100px;
+}
+
+.table-header {
+  display: table-cell;
+  border: 1px solid #333333;
+  background-color: #afafaf;
+  font-weight: bold;
+  padding: 5px;
+}
+
+
+/* Other styling */
+
+.function-validation-info-no {
+  color: #ffffff;
+  background-color: #999999;
+  width: auto;
+  text-align: center;
+  border-radius: 9999px;
+}
+
+.function-validation-info-yes {
+  color: #ffffff;
+  background-color: #333333;
+  width: auto;
+  text-align: center;
+  border-radius: 9999px;
+}
+
+.hidden-submit {
+  display: none;
+}
+

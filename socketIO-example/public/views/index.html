@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Socket IO Test</title>
+    <meta charset="UTF-8" />
+    <!-- <meta http-equiv="refresh" content="15" /> -->
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../css/bootstrap-responsive.min.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  </head>
+
+
+  <body>
+
+    <div class="row hero-unit">
+      <div class="span2">
+	<p>foo</p>
+      </div>
+      <div class="span8">
+	<div id="dynamic-content">
+	  <p id="counter"></p>
+	  
+	</div>
+      </div>
+    </div>
+
+
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/renderer.js"></script>
+    <script type="text/javascript" src="../socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+      var socket = io.connect('http://localhost');
+
+      socket.on('refresh', function(data) {
+        setTimeout(function() {
+           document.location.reload(true);}, data.delay);
+      });
+
+      socket.on('news', function(data) {
+        socket.emit('test event', { test: 'data' });
+      
+        var counterP = document.getElementById('counter');
+      
+        var renderer = new Renderer();
+        counterP.innerHTML = renderer.render(data);
+	counterP.firstChild().setAttribute('class', '.table')  // Bootstrap styling
+      });
+
+    </script>
+
+  </body>
+</html>

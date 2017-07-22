@@ -1,0 +1,144 @@
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+  background: url('../img/whitey.png');
+}
+
+.navbar-fixed-top {
+  box-shadow: 0px 0px 3px #000;
+  border-bottom: 1px solid #999;
+}
+
+.geddy-welcome-box {
+  text-align: center;
+  background-color: rgba(200, 200, 200, .5);
+  box-shadow: 0px 0px 3px #bababa;
+  border: 1px solid #EDEDED;
+}
+
+.geddy-welcome-box h1 {
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+
+.geddy-welcome-box p {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.geddy-welcome-box .btn-large {
+  margin-top: 20px;
+}
+
+.list-item {
+  margin-bottom: 20px;
+}
+
+.list-item div {
+  background: white;
+  border-bottom: 2px solid #ccc;
+}
+
+.list-item div > * {
+  padding: 20px;
+}
+
+.list-item div h3 i {
+  margin: 5px;
+}
+
+@media (max-width:480px) {
+  .hero-unit .pull-right {
+    float: none;
+    margin-top: 10px;
+  }
+}
+
+.vbox {
+    background-color: #efefef;
+    border-bottom: 2px solid #cccccc;
+    font-size: large;
+    margin-top: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: auto;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.outer-center {
+    float: right;
+    right: 50%;
+    position: relative;
+}
+
+.inner-center {
+    float: right;
+    right: -50%;
+    position: relative;
+}
+
+.output-box {
+    width: 100%;;
+    background-color: #dedede;
+    text-align: left;
+}
+
+#main-header {
+    background-color: #aeaeae;
+    border-top-left-radius: 1000px 10px;
+    border-top-right-radius: 1000px 10px;
+    border-top: 2px solid rgba(255, 255, 255, .5);
+    border-left: 2px solid rgba(255, 255, 255, .5);
+    border-right: 2px solid rgba(255, 255, 255, .5);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    top: 0;
+    width: 80%;
+    float: none;
+    margin: auto;
+}
+
+#main-header-title {
+    color: #333333;
+    padding-top: 10px;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    font-size: 2em;
+    font: 2em/1.4 Helvetica,arial,freesans,clean,sans-serif;
+    font-weight: bold;
+}
+
+#main-footer {
+    background-color: #aeaeae;
+    border-bottom-left-radius: 1000px 10px;
+    border-bottom-right-radius: 1000px 10px;
+    border-top: 2px solid rgba(255, 255, 255, .5);
+    border-left: 2px solid rgba(255, 255, 255, .5);
+    border-right: 2px solid rgba(255, 255, 255, .5);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    top: 0;
+    width: 80%;
+    float: none;
+    margin: auto;
+    padding: 10px;
+}
+
+#previous-command-box {
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    float: right;
+}
+
+body {
+    padding-top: 20px;
+}
+
+/* Debugging */
+#debug-params {
+    display: none;
+}
+

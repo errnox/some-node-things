@@ -1,0 +1,99 @@
+<%
+   var allParams = params.foos
+   , allIssues = params.allIssues;
+%>
+
+
+<%# ==================================================================== %>
+<%# Inspector %>
+<%# ==================================================================== %>
+
+<% if (allParams) { %>
+
+<h1>All Issues</h1>
+<p>Type: <%= typeof allParams; %></p>
+<p><%= allParams; %></p>
+
+<div id="" class="">
+  <h1>Issues</h1>
+  <table width="" cellspacing="" cellpadding="" border="">
+    <% var issueList = Object.getOwnPropertyNames(allParams); %>
+    <% for (var i in issueList) { %>
+    <tr>
+      <td><%= issueList[i]; %></td><td><code><%= typeof issueList[i]; %></code></td>
+      <td><pre><code><%= params[issueList[i]]; %></code></pre></td>
+    <% } %>
+    </tr>
+  </table>
+
+
+  <h1>params</h1>
+  <table width="" cellspacing="" cellpadding="" border="">
+    <% var props = Object.getOwnPropertyNames(params); %>
+    <% for (var i in props) { %>
+    <tr>
+      <td><%= props[i]; %></td><td><code><%= typeof params[props[i]]; %></code></td>
+      <td><pre><code><%= params[props[i]]; %></code></pre></td>
+    <% } %>
+    </tr>
+
+  </table>
+
+
+</div>
+
+
+<%# ==================================================================== %>
+<%# Issues %>
+<%# ==================================================================== %>
+
+<% } else if (allIssues) { %>
+
+  <div class="hero-unit">
+    <h2>Issues (HTML table)</h2>
+    <table width="" cellspacing="" cellpadding="" border="">
+      <% for (var i in Object.getOwnPropertyNames(allIssues)) { %>
+      <tr>
+	<td><%= allIssues[i]; %></td>
+      </tr>
+      <% } %>
+    </table>
+
+    <h2>Issues</h2>
+    <ul>
+      <% for (var i in allIssues) { %>
+      <li><%= allIssues[i].title; %></li>
+      <% } %>
+    </ul>
+
+    <h2>Issues (JSON)</h2>
+    <pre>
+      <code class="json">
+	<% var replacement = { 'b': undefined}; %>
+	<%= JSON.stringify(allIssues, replacement, 2); %>
+      </code>
+    </pre>
+  </div>
+
+
+<%# ==================================================================== %>
+<%# Info %>
+<%# ==================================================================== %>
+
+<% } else {%>
+
+<% var n = 8; %>
+<% for (var i = 0; i < n; i++) { %>
+  <div class="hero-unit">
+    <p class="label label-info"><i class="icon-exclamation-sign"></i> Nothing</p>
+<% } %>
+
+<% for (var i = 0; i < n; i++) { %>
+  </div>
+<% } %>
+
+
+
+
+<% } %>
+

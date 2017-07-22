@@ -1,0 +1,22 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    background: url('../img/whitey.png')
+}
+
+table {
+    border: 1px solid #acacac;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-spacing: 0;
+    width: 100%;
+}
+
+table td {
+    border: 1px solid #acacac;
+    padding: 10px;
+    width: 100%;
+    vertical-align: top;
+    text-align: left;
+}
+

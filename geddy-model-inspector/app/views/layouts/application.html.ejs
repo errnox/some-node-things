@@ -1,0 +1,105 @@
+<%
+   var debug = false;
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Geddy App | This app uses Geddy.js</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <%- scriptLink('http://html5shim.googlecode.com/svn/trunk/html5.js', {type:'text/javascript'}) %>
+    <![endif]-->
+
+    <%- scriptLink('/js/jquery.min.js', {type:'text/javascript'}) %>
+    <%- scriptLink('/js/bootstrap.min.js', {type:'text/javascript'}) %>
+    <%- scriptLink('/js/core/core.js', {type: 'text/javascript'}) %>
+    <!-- <%- scriptLink('/js/models/your_model.js', {type:'text/javascript'}) %> -->
+    <%- scriptLink('/js/config/init.js', {type: 'text/javascript'}) %>
+
+    <%- styleLink('/css/bootstrap.min.css', {rel:'stylesheet'}) %>
+    <%- styleLink('/css/style.css', {rel:'stylesheet'}) %>
+    <%- styleLink('/css/bootstrap.responsive.min.css', {rel:'stylesheet'}) %>
+
+    <!-- The fav and touch icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/css/highlight.css">
+    <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script type="text/javascript" src="js/ultra.js"></script>
+
+  </head>
+  
+  <body>
+
+
+
+<%# ==================================================================== %>
+<%# Main body
+<%# ==================================================================== %>
+
+
+    <div id="main-header">
+      <div id="main-header-title"><h1>Big Wheel</h1></div>
+    </div>
+
+    <div class="container">
+      <%- yield(); %>
+    </div>
+
+
+<%# ==================================================================== %>
+<%# Debugging: inject parms %>
+<%# ==================================================================== %>
+
+<div id="debug-params">
+  <% if (debug) {
+    var cache = [];
+    var stringified = JSON.stringify(params, function(key, value) {
+      if (typeof value === 'object' && value !== null) {
+        if (cache.indexOf(value) !== -1) {
+          // Circular reference found, discard key
+          return;
+        }
+        // Store value in our collection
+        cache.push(value);
+      }
+      return value;
+    }, 2);
+  } %>
+
+  <%= stringified; %>
+
+</div>
+
+  <% if (debug) { %>
+
+<script type="text/javascript">
+  var ultra = new UltraRenderer();
+  var params = document.getElementById('debug-params').innerHTML;
+  var data = JSON.parse(params);
+  var table = ultra.render(data);
+  var firstChild = document.createElement('div');
+  var html = document.getElementsByTagName('body')[0];
+  html.appendChild(firstChild);
+  firstChild.innerHTML = table;
+  firstChild.innerHTML += '<pre><code class="json">' + params + '<pre><code>';
+</script>
+
+  <% } %>
+
+
+  </body>
+</html>
+

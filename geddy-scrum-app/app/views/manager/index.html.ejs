@@ -1,0 +1,184 @@
+<%
+  var models = params['models']
+  , datatypes = params['datatypes'];
+
+  // @method comboBox Takes an array and returns a combobox.
+  // @param {Array} options Array of selectable combobox items. Strings and
+  //   all types that can be coerced to strings are allowed.
+  // @param {Object} attributes Object providing attributes and values for
+  //   the <select> element. Valid value: strings and all objects that can
+  //   be converted to strings.
+  // @param {String} selected String that matches the string representation
+  //   of one of the items in `options`.
+  // @return {String} Returns a <select> element containing <option>
+  //   elements.
+  var comboBox = function(options, attributes, selected) {
+    var attrs = '';
+    
+    // Generate attribute list if there are attributes
+    var attributeNames = Object.getOwnPropertyNames(attributes);
+    for (var i in attributeNames) {
+      var name = attributeNames[i];
+      attrs += name + '="' + attributes[name] + '" ';
+    }
+    
+    // Insert attributes if there are some
+    var box = '<select onChange="sendData({name: this.name, data: this.options[selectedIndex].value});" '+ attrs + '>\n';
+    
+    
+    var selectedAttr = '';
+    // Insert all regular options
+    for (var i in options) {
+      var option = options[i];
+      if (option === selected) {
+	selectedAttr = ' selected=""';
+      } else {
+	selectedAttr = '';
+      }
+      box += '<option value="' + option.toLowerCase() + '"' +
+	selectedAttr + '>' + option + '</option>\n';
+    }
+    
+    box += '<input type="submit" value="Submit!" class="hidden-submit" />';
+    box += '</select>\n';
+    
+    return box;
+  };
+%>
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+  var socket = io.connect('http://localhost');
+  socket.on('hello', function(data) {
+    console.log('hello event: ' + data);
+    socket.emit('message', {hello: 'server'});
+  });
+  socket.on('modelChange', function(data) {
+    console.log('modelChange event: ' + JSON.stringify(data));
+  });
+
+</script>
+<script type="text/javascript">
+  var sendData = function(data) {
+    socket.emit('uiChange', data);
+  };
+
+  var handleKeyPress = function(e, element) {
+    var key = e.keyCode || e.which;
+    if (key === 13) {
+      sendData({name: element.name, data: element.value});
+      element.blur();
+    }
+  };
+</script>
+
+
+<%#- comboBox(['One', 'Two', 'Three', 'Four', 'Five'], {name: 'Something'}, 'Three'); %>
+
+<%# ==================================================================== %>
+<%# Including the stylesheet in the head would be more appropriate %>
+<%# ==================================================================== %>
+
+<link rel="stylesheet" href="css/manager.css" />
+
+
+<%# ==================================================================== %>
+<%# Manager %>
+<%# ==================================================================== %>
+
+<div class="hero-unit">
+  <h1>Manager</h1>
+  
+  <h2>Models</h2>
+  
+  <% for (var model in models) { %>
+  
+  <h3> <%= model %> </h3>
+  
+  <div class="table">
+    <div class="table-row">
+      <div class="table-header">
+	Name
+      </div>
+      <div class="table-header">
+	Datatype
+      </div>
+      <div class="table-header">
+	Required
+      </div>
+      <div class="table-header">
+	Present
+      </div>
+      <div class="table-header">
+	Min length
+      </div>
+      <div class="table-header">
+	Max length
+      </div>
+      <div class="table-header">
+	Validates with function
+      </div>
+    </div>
+    <% var properties = models[model]; %>
+    
+    
+    <% var propertyNames = Object.getOwnPropertyNames(properties); %>
+    <% for (var i in propertyNames) { %>
+    
+    <div class="table-row">
+      <div class="table-cell">
+	<%= propertyNames[i]; %>
+      </div>
+      
+      <div class="table-cell">
+	<%- comboBox(datatypes, {name: model + '-' + propertyNames[i] + '-datatype-combobox', class: 'ui-element input-block-level'}, properties[propertyNames[i]].datatype); %>
+      </div>
+      
+      <div class="table-cell">
+	<%- contentTag('input', 'foobar', {type: 'checkbox', name: model + '-' + propertyNames[i] + '-' + 'required-checkbox', value: model + '.' + properties[propertyNames[i]].required, checked: properties[propertyNames[i]].required, class: 'input-block-level', onchange: 'sendData({name: this.name, value: this.checked});'}); %>
+      </div>
+      
+      <% var validations = properties[propertyNames[i]].validations; %>
+      <% var validationProperties = Object.getOwnPropertyNames(validations); %>
+      <% console.log('VALIDATIONS: ' + validationProperties); %>
+      
+      <%# for (var j in validationProperties) { %>
+      
+      <div class="table-cell">
+	<%- contentTag('input', 'foobar', {type: 'checkbox', name: model + '-' + propertyNames[i] + '-present-checkbox', value: model + '.' + propertyNames[i], checked: validations.present, class: 'input-block-level', onchange: 'sendData({name: this.name, value: this.checked});'}); %>
+      </div>
+      
+      <div class="table-cell">
+	<input onkeypress="handleKeyPress(event, this);" onblur="sendData({name: this.name, data: this.value});" type="text" name="<%= model + '-' + propertyNames[i] %>-minlength-textinput" value="<%= validations.length.qualifier.min %>" class="input-block-level" />
+      </div>
+      
+      <div class="table-cell">
+	<input onkeypress="handleKeyPress(event, this);" onblur="sendData({name: this.name, data: this.value});" type="text" name="<%= model + '-' + propertyNames[i] %>-maxlength-textinput" value="<%= validations.length.qualifier.max %>" class="input-block-level" />
+      </div>
+
+      <div class="table-cell">
+	<% if (validations.withFunction) { %>
+	<div class="function-validation-info-yes">yes</div>
+	<% } else { %>
+	<div class="function-validation-info-no">no</div>
+	<% } %>
+      </div>
+
+
+      <%# } %>
+      
+    </div>
+    
+    <% } %>
+    
+    
+  </div>
+  
+  
+  
+  
+  <% } %>
+  
+  
+  
+</div>

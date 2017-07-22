@@ -1,0 +1,61 @@
+
+<%
+   var errorMessage = params['errorMessage']
+   , command = params['command']
+   , output = params['output'];
+%>
+
+<script>
+  function onBlur(el) {
+    if (el.value == '') {
+      el.value = el.defaultValue;
+    }
+  }
+function onFocus(el) {
+  if (el.value == el.defaultValue) {
+    el.value = '';
+  }
+}
+</script>
+
+<div class="container">
+  <div class="hero-unit geddy-welcome-box">
+    <form class="form-search pagination-centered" method="POST" action="/">
+      <fieldset>
+	<input class="span9" type="text" name="command-textbox" value="&#9658;&#9658;" onblur="onBlur(this)" onfocus="onFocus(this)"/>
+	<input class="btn" type="submit" name="command-button" value="Run" />
+      </fieldset>
+    </form>
+
+  </div>
+
+
+  <% if (command) { %>
+</div>
+<div id="previous-command-box">
+  <p>Previous command: <code class="bash"><%= command %></code>
+    <% if (errorMessage) { %>
+    <code class="bash label label-important"><%= errorMessage %></code>
+    <% } %>
+  </p>
+</div>
+<% } %>
+
+<% if (command) { %>
+<div class="output-box">
+  <h2>Output</h2>
+  <pre><code class="bash"><%= output %></code></pre>
+</div>
+<% } %>
+</div>
+
+<div id="main-footer">
+  <h1>Index</h1>
+  <ul>
+    <li><a href="/issues">Issues</a> </li>
+    <li><a href="/info">Info</a> </li>
+  </ul>
+</div>
+</div>
+
+

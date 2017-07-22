@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+
+# Customization
+
+# Number of lines to append
+lines=3000;
+# Number of repetitions (fills the files n times with m lines)
+repetitions=100;
+# Number of seconds to sleep between each append action
+seconds=1.2;
+# Indicates if data files should be flushed before generating data
+# (1: do flush, any other value: do not flush)
+doFlush=1;
+
+
+# Data Generation
+
+for file in "$@";
+do
+
+   # Flush the file
+    if [ $doFlush -eq 1 ];
+    then
+        printf '' > $file;
+    fi
+
+    # Write data to the file
+    for (( i=0; i<repetitions; i++ ));
+    do
+	 for (( i=0; i<$lines; i++ ));
+	 do
+             printf 'New data: %s\n' $i >> $file;
+             sleep $seconds;
+	 done;
+     done;
+done

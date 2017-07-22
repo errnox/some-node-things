@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Info</title>
+    <meta encoding="utf8" />
+
+  </head>
+
+  <body>
+    <div id="main-content">
+      <h1>geddy.model.Issue</h1>
+      <pre><code class="javascript">
+	<%= geddy.model.Issue.toString(); %>
+      </code></pre>
+
+      <h1>params</h1>
+      <ul>
+	<% var props = Object.getOwnPropertyNames(params); %>
+        <% for (var i in props) { %>
+        <li><pre><code class="javascript"><%= props[i]  %></code></pre></li>
+        <% } %>
+      </ul>
+
+      <% if (params.calendar) { %>
+      <h1>Calendar</h1>
+      <p>Command: <pre><code class="bash"><%= params.cmd; %></code></pre></p>
+
+      <div class="outer-center">
+	<div class="outer-center">
+	  <i class="icon-arrow-down"></i>
+	</div>
+      </div>
+
+      <p>Output:</p>
+      <pre><code class="ascii">
+	<%= params.calendar; %>
+      </code></pre>
+      <% } %>
+
+      <ul>
+	<% /* %>
+        <% if (issues && issues.length) { %>
+          <% for (var i in issues) { %>
+      	  <li> <%= issues[i] %></li>
+          <% } %>
+        <% } %>
+	<% */ %>
+        </ul>
+
+    </div>
+  </body>
+</html>
